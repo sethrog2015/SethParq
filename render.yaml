@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: project-portfolio-app
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -w 2 -b 0.0.0.0:$PORT app:app
+    envVars:
+      - key: FLASK_SECRET_KEY
+        generateValue: true
+      - key: DB_PATH
+        value: /var/data/projects.db
+    disks:
+      - name: portfolio-data
+        mountPath: /var/data
+        sizeGB: 1
